@@ -2,6 +2,7 @@ import React, { Component } from  'react';
 import BookmarksContext from '../BookmarksContext';
 import config from '../config'
 import './AddBookmark.css';
+import PropTypes from 'prop-types'
 
 const Required = () => (
   <span className='AddBookmark__required'>*</span>
@@ -14,6 +15,8 @@ class AddBookmark extends Component {
     error: null,
   };
 
+  
+
   handleSubmit = e => {
     e.preventDefault()
     // get the form fields from the event
@@ -24,6 +27,9 @@ class AddBookmark extends Component {
       description: description.value,
       rating: rating.value,
     }
+
+    
+
     this.setState({ error: null })
     fetch(config.API_ENDPOINT, {
       method: 'POST',
@@ -44,12 +50,18 @@ class AddBookmark extends Component {
         return res.json()
       })
       .then(data => {
+        console.log(data)
         title.value = ''
         url.value = ''
         description.value = ''
         rating.value = ''
+<<<<<<< HEAD
         this.context.addBookmark(data)
         this.props.history.push('/')
+=======
+        this.props.history.push('/')
+        this.context.addBookmark(data)
+>>>>>>> master
       })
       .catch(error => {
         console.log(error)
@@ -63,6 +75,10 @@ class AddBookmark extends Component {
 
   render() {
     const { error } = this.state
+<<<<<<< HEAD
+=======
+
+>>>>>>> master
     return (
       <section className='AddBookmark'>
         <h2>Create a bookmark</h2>

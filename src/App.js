@@ -6,10 +6,15 @@ import BookmarksContext from './BookmarksContext';
 import Nav from './Nav/Nav';
 import config from './config';
 import './App.css';
+import { Route } from 'react-router-dom';
 
 class App extends Component {
   state = {
+<<<<<<< HEAD
     bookmarks: [],
+=======
+    bookmarks,
+>>>>>>> master
     error: null,
   };
 
@@ -45,6 +50,7 @@ class App extends Component {
   }
 
   render() {
+<<<<<<< HEAD
     const contextValue = {
       bookmarks: this.state.bookmarks,
       addBookmark: this.addBookmark,
@@ -66,6 +72,36 @@ class App extends Component {
             />
           </div>
         </BookmarksContext.Provider>
+=======
+    const { bookmarks } = this.state
+    return (
+      <main className='App'>
+        <h1>Bookmarks!</h1>
+        <Nav />
+        <div className='content' aria-live='polite'>
+        
+          
+          <Route
+            path='/add-bookmark'
+            render={({ history }) => {
+                          console.log(history)
+                          return <AddBookmark
+                            onAddBookmark={this.addBookmark}
+                            onClickCancel={() => history.push('/')}
+                            />
+                          }}
+          />
+          
+          <Route
+            exact path='/'
+           render={() =>
+              <BookmarkList
+                bookmarks={bookmarks}
+              />}
+          />
+      
+        </div>
+>>>>>>> master
       </main>
     );
   }

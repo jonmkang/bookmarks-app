@@ -1,20 +1,21 @@
 import React, { Component } from  'react';
+import BookmarksContext from '../BookmarksContext';
 import config from '../config'
 import './AddBookmark.css';
-import { withRouter } from 'react-router-dom'
+import PropTypes from 'prop-types'
 
 const Required = () => (
   <span className='AddBookmark__required'>*</span>
 )
 
 class AddBookmark extends Component {
-  static defaultProps = {
-    onAddBookmark: () => {}
-  };
+  static contextType = BookmarksContext;
 
   state = {
     error: null,
   };
+
+  
 
   handleSubmit = e => {
     e.preventDefault()
@@ -24,8 +25,11 @@ class AddBookmark extends Component {
       title: title.value,
       url: url.value,
       description: description.value,
-      rating: rating.value,             
+      rating: rating.value,
     }
+
+    
+
     this.setState({ error: null })
     fetch(config.API_ENDPOINT, {
       method: 'POST',
@@ -46,21 +50,26 @@ class AddBookmark extends Component {
         return res.json()
       })
       .then(data => {
+        console.log(data)
         title.value = ''
         url.value = ''
         description.value = ''
         rating.value = ''
         this.props.history.push('/')
-        this.props.onAddBookmark(data)
+        this.context.addBookmark(data)
       })
       .catch(error => {
         this.setState({ error })
       })
   }
 
+  handleClickCancel = () => {
+    this.props.history.push('/')
+  };
+
   render() {
     const { error } = this.state
-    const { onClickCancel } = this.props
+
     return (
       <section className='AddBookmark'>
         <h2>Create a bookmark</h2>
@@ -125,7 +134,7 @@ class AddBookmark extends Component {
             />
           </div>
           <div className='AddBookmark__buttons'>
-            <button type='button' onClick={onClickCancel}>
+            <button type='button' onClick={this.handleClickCancel}>
               Cancel
             </button>
             {' '}
@@ -139,4 +148,4 @@ class AddBookmark extends Component {
   }
 }
 
-export default withRouter(AddBookmark);
+export default AddBookmark;

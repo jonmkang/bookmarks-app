@@ -5,18 +5,17 @@
   "dependencies": {
     "react": "^16.6.3",
     "react-dom": "^16.6.3",
-<<<<<<< HEAD
-    "react-router-dom": "^4.3.1",
-=======
     "react-router-dom": "^5.2.0",
->>>>>>> master
     "react-scripts": "2.1.1"
   },
   "scripts": {
     "start": "react-scripts start",
+    "prebuild": "CI=true react-scripts test --colors",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build",
+    "deploy": "vercel --prod"
   },
   "eslintConfig": {
     "extends": "react-app"
